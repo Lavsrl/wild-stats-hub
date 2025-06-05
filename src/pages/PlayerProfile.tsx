@@ -28,6 +28,15 @@ const PlayerProfile = () => {
   const kd = stats.deaths > 0 ? (stats.kills / stats.deaths).toFixed(2) : stats.kills.toFixed(2);
   const winRate = stats.wins + stats.losses > 0 ? ((stats.wins / (stats.wins + stats.losses)) * 100).toFixed(1) : "0.0";
 
+  const getGameModeName = (mode: string) => {
+    switch (mode) {
+      case "hg": return "Hunger Games";
+      case "duels": return "Duels";
+      case "academy": return "Academy";
+      default: return mode;
+    }
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Player Header */}
@@ -60,8 +69,8 @@ const PlayerProfile = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div className="flex items-center space-x-2">
                   <Trophy className="w-4 h-4 text-yellow-500" />
-                  <span className="text-muted-foreground">Rank Global:</span>
-                  <span className="font-semibold">#{player.rank}</span>
+                  <span className="text-muted-foreground">Rank em {getGameModeName(selectedMode)}:</span>
+                  <span className="font-semibold">#{stats.rank}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Calendar className="w-4 h-4 text-blue-500" />
@@ -159,6 +168,10 @@ const PlayerProfile = () => {
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Total de Deaths:</span>
                 <span className="font-semibold">{stats.deaths.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Rank em {getGameModeName(selectedMode)}:</span>
+                <span className="font-semibold">#{stats.rank}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Sequência Atual:</span>

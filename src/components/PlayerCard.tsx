@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Sword, Shield, Target } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface PlayerCardProps {
   player: {
@@ -20,6 +21,7 @@ interface PlayerCardProps {
 }
 
 export const PlayerCard = ({ player, gameMode, showRank = true }: PlayerCardProps) => {
+  const navigate = useNavigate();
   const kd = player.deaths > 0 ? (player.kills / player.deaths).toFixed(2) : player.kills.toFixed(2);
   const winRate = player.wins + player.losses > 0 ? ((player.wins / (player.wins + player.losses)) * 100).toFixed(1) : "0.0";
 
@@ -30,8 +32,12 @@ export const PlayerCard = ({ player, gameMode, showRank = true }: PlayerCardProp
     return <Badge variant="outline">#{rank}</Badge>;
   };
 
+  const handleClick = () => {
+    navigate(`/player/${player.name}`);
+  };
+
   return (
-    <Card className="glass-effect hover:bg-card/90 transition-all duration-300 cursor-pointer group">
+    <Card className="glass-effect hover:bg-card/90 transition-all duration-300 cursor-pointer group" onClick={handleClick}>
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-4">

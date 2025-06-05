@@ -42,16 +42,6 @@ const ClanProfile = () => {
                 </p>
               </div>
             </div>
-            <div className="flex space-x-2">
-              <Button variant="outline" className="flex items-center space-x-2">
-                <UserPlus className="w-4 h-4" />
-                <span>Solicitar Entrada</span>
-              </Button>
-              <Button variant="outline" className="flex items-center space-x-2">
-                <Mail className="w-4 h-4" />
-                <span>Contato</span>
-              </Button>
-            </div>
           </div>
         </CardContent>
       </Card>

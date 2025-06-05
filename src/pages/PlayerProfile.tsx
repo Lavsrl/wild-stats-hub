@@ -5,16 +5,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { GameModeSelector } from "@/components/GameModeSelector";
 import { useState } from "react";
-import { mockPlayerProfile } from "@/lib/mockData";
+import { mockPlayerProfiles } from "@/lib/mockData";
 import { User, Clock, Calendar, Trophy, Sword, Shield, Target, TrendingUp } from "lucide-react";
 
 const PlayerProfile = () => {
   const { nickname } = useParams();
   const [selectedMode, setSelectedMode] = useState("hg");
   
-  // Em uma aplicação real, buscaríamos os dados do jogador pela API
-  const player = mockPlayerProfile;
-  const stats = player.stats[selectedMode as keyof typeof player.stats];
+  // Buscar o jogador pelos dados mock
+  const player = nickname ? mockPlayerProfiles[nickname as keyof typeof mockPlayerProfiles] : null;
 
   if (!player) {
     return (
@@ -25,6 +24,7 @@ const PlayerProfile = () => {
     );
   }
 
+  const stats = player.stats[selectedMode as keyof typeof player.stats];
   const kd = stats.deaths > 0 ? (stats.kills / stats.deaths).toFixed(2) : stats.kills.toFixed(2);
   const winRate = stats.wins + stats.losses > 0 ? ((stats.wins / (stats.wins + stats.losses)) * 100).toFixed(1) : "0.0";
 
@@ -50,6 +50,13 @@ const PlayerProfile = () => {
                   </Badge>
                 )}
               </div>
+              {player.discord && (
+                <div className="mb-3">
+                  <Badge variant="outline" className="text-sm">
+                    Discord: {player.discord}
+                  </Badge>
+                </div>
+              )}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div className="flex items-center space-x-2">
                   <Trophy className="w-4 h-4 text-yellow-500" />
